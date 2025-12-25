@@ -1,12 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { login } from '../services/api';
+import axios from 'axios';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [backendStatus, setBackendStatus] = useState('checking');
+
+  // Check backend status on component mount
+  useEffect(() => {
+    const checkBackend = async () => {
+      try {
+        await axios.get('http://localhost:5000');
+        setBackendStatus('connected');
+      } catch (error) {
+        setBackendStatus('disconnected');
+      }
+    };
+    checkBackend();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,7 +33,17 @@ const Login = () => {
       localStorage.setItem('token', res.data.token);
       window.location.href = '/dashboard';
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed. Please try again.');
+      console.error('Login error:', err);
+      
+      if (err.code === 'ERR_NETWORK') {
+        setError('Cannot connect to server. Please make sure the backend is running on http://localhost:5000');
+      } else if (err.response?.status === 401) {
+        setError('Invalid email or password. Please check your credentials.');
+      } else if (err.response?.status === 500) {
+        setError('Server error. Please try again later or check if the database is connected.');
+      } else {
+        setError(err.response?.data?.message || 'Login failed. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -65,6 +90,30 @@ const Login = () => {
                 <div className="text-center mb-4">
                   <h2 className="fw-bold text-primary">💪 Virtual Personal Trainer</h2>
                   <p className="text-muted">Log in to continue your fitness journey</p>
+                  
+                  {/* Backend Status Indicator */}
+                  <div className="mb-3">
+                    {backendStatus === 'checking' && (
+                      <small className="text-info">
+                        <span className="spinner-border spinner-border-sm me-2" role="status"></span>
+                        Checking server connection...
+                      </small>
+                    )}
+                    {backendStatus === 'connected' && (
+                      <small className="text-success">
+                        ✅ Server connected
+                      </small>
+                    )}
+                    {backendStatus === 'disconnected' && (
+                      <div className="alert alert-warning py-2">
+                        <small>
+                          ⚠️ Cannot connect to server. Please start the backend server:
+                          <br />
+                          <code>cd backend && npm start</code>
+                        </small>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {error && (
@@ -101,7 +150,7 @@ const Login = () => {
                   <button
                     type="submit"
                     className="btn btn-primary btn-lg w-100 fw-bold"
-                    disabled={loading}
+                    disabled={loading || backendStatus === 'disconnected'}
                   >
                     {loading ? 'Logging in...' : 'Login'}
                   </button>

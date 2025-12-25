@@ -49,6 +49,30 @@ router.get('/plans', authMiddleware, async (req, res) => {
   }
 });
 
+// Delete a workout plan
+router.delete('/plans/:id', authMiddleware, async (req, res) => {
+  try {
+    const planId = req.params.id;
+    
+    // Find and delete the plan, ensuring it belongs to the user
+    const plan = await WorkoutPlan.findOneAndDelete({ 
+      _id: planId, 
+      userId: req.userId 
+    });
+    
+    if (!plan) {
+      return res.status(404).json({ message: 'Plan not found or unauthorized' });
+    }
+    
+    // Also delete associated progress logs
+    await ProgressLog.deleteMany({ planId: planId });
+    
+    res.json({ message: 'Plan deleted successfully', deletedPlan: plan });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
 // Log progress for a plan
 router.post('/logs', authMiddleware, async (req, res) => {
   try {

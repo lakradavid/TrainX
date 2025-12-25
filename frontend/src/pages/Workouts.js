@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const workoutsData = [
   {
@@ -136,6 +137,7 @@ const Workouts = () => {
   const [level, setLevel] = useState('All');
   const [selectedWorkout, setSelectedWorkout] = useState(null);
   const videoRefs = useRef([]);
+  const navigate = useNavigate();
 
   const filteredWorkouts =
     level === 'All'
@@ -161,6 +163,22 @@ const Workouts = () => {
 
   return (
     <div className="min-vh-100 bg-dark text-white py-5">
+      {/* Back Button */}
+      <button 
+        className="btn btn-outline-light position-fixed"
+        style={{ 
+          top: '20px', 
+          left: '20px', 
+          zIndex: 1000,
+          borderRadius: '50px',
+          padding: '10px 20px'
+        }}
+        onClick={() => navigate('/dashboard')}
+      >
+        <i className="fas fa-arrow-left me-2"></i>
+        Back
+      </button>
+
       <div className="container">
 
         <h1 className="text-center fw-bold mb-3">🏋️ Know Your Workouts</h1>

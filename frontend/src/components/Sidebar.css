@@ -1,0 +1,272 @@
+/* Sidebar Styles */
+.sidebar {
+  background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+  box-shadow: 2px 0 15px rgba(0, 0, 0, 0.4);
+  border-right: 1px solid #4a5568;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease, width 0.3s ease;
+}
+
+.sidebar.sidebar-open {
+  transform: translateX(0);
+}
+
+.sidebar.sidebar-hidden {
+  transform: translateX(-100%);
+}
+
+.sidebar .nav-link {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin: 2px 8px;
+  transition: all 0.3s ease;
+  position: relative;
+  color: #e2e8f0 !important;
+}
+
+.sidebar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: translateX(2px);
+  color: #ffffff !important;
+}
+
+.sidebar .nav-link.active {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.4);
+  color: #ffffff !important;
+}
+
+.sidebar .nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  background: #fff;
+  border-radius: 0 2px 2px 0;
+}
+
+/* Profile section hover effect */
+.sidebar .profile-section {
+  color: #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.sidebar .profile-section:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #ffffff !important;
+}
+
+/* Menu button with light blue background and black text */
+.menu-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1001;
+  background: lightblue;
+  border: none;
+  border-radius: 8px;
+  width: 60px;
+  height: 45px;
+  color: black;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(173, 216, 230, 0.4);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-toggle:hover {
+  background: #add8e6;
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(173, 216, 230, 0.6);
+  color: black;
+}
+
+.menu-toggle:active {
+  transform: scale(0.95);
+}
+
+.menu-toggle i {
+  transition: transform 0.3s ease;
+}
+
+.menu-toggle:hover i {
+  transform: scale(1.1);
+}
+
+/* Logout button - Red square */
+.logout-btn {
+  background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  width: 45px !important;
+  height: 45px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: white !important;
+  font-size: 16px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3) !important;
+}
+
+.logout-btn:hover {
+  background: linear-gradient(135deg, #c0392b, #a93226) !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4) !important;
+  color: white !important;
+}
+
+.logout-btn:active {
+  transform: scale(0.95) !important;
+}
+
+/* Responsive sidebar */
+@media (max-width: 768px) {
+  .menu-toggle {
+    top: 15px;
+    left: 15px;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+}
+
+/* Desktop sidebar behavior */
+@media (min-width: 769px) {
+  .sidebar {
+    width: 250px !important;
+  }
+}
+
+/* Mobile sidebar behavior */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 250px !important;
+    position: fixed !important;
+    z-index: 1000;
+  }
+}
+
+/* Smooth transitions */
+.sidebar, .main-content {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Profile image hover effect */
+.profile-image {
+  transition: transform 0.3s ease;
+  border: 2px solid #4a5568;
+}
+
+.profile-image:hover {
+  transform: scale(1.05);
+  border-color: #3498db;
+}
+
+/* Sidebar icons */
+.sidebar .fas {
+  width: 20px;
+  text-align: center;
+  color: #bdc3c7;
+}
+
+.sidebar .nav-link:hover .fas,
+.sidebar .nav-link.active .fas {
+  color: #ffffff;
+}
+
+/* Sidebar header */
+.sidebar-header {
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid #4a5568;
+  position: relative;
+  z-index: 1;
+  margin-top: 60px; /* Add space from menu button */
+}
+
+.sidebar-header h5 {
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Progress button styling */
+.sidebar .nav-item button.nav-link {
+  color: #e2e8f0 !important;
+  transition: all 0.3s ease;
+}
+
+.sidebar .nav-item button.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  transform: translateX(2px);
+  color: #ffffff !important;
+}
+
+/* Sidebar footer */
+.sidebar-footer {
+  background: rgba(0, 0, 0, 0.1);
+  border-top: 1px solid #4a5568;
+}
+
+/* Text colors */
+.sidebar .text-white {
+  color: #e2e8f0 !important;
+}
+
+.sidebar .text-muted {
+  color: #a0aec0 !important;
+}
+
+/* Overlay for mobile and desktop */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.sidebar-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Progress charts section */
+.progress-charts {
+  scroll-margin-top: 100px; /* Account for fixed menu button */
+  padding: 2rem 0;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Dashboard title styling */
+.dashboard-title {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard-subtitle {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  font-style: italic;
+  color: powderblue !important;
+}
+
+/* Remove the old mobile-specific sidebar styles */

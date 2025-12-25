@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import PersonalTrainer from './pages/PersonalTrainer';
 import Workouts from './pages/Workouts';
 import SmartCoach from './pages/SmartCoach';
+import Profile from './pages/Profile';
 
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem('token'));
@@ -41,10 +42,14 @@ const App = () => {
             path="/dashboard" 
             element={token ? <Dashboard /> : <Navigate to="/login" replace />} 
           />
+          <Route 
+            path="/profile" 
+            element={token ? <Profile /> : <Navigate to="/login" replace />} 
+          />
           <Route path="/trainer" element={token ? <PersonalTrainer /> : <Navigate to="/login" replace />} />
-          <Route path="*" element={<Navigate to="/login" replace />} />
           <Route path="/workouts" element={<Workouts />} />
           <Route path="/smart-coach" element={<SmartCoach />} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
 
         </Routes>
       </div>
